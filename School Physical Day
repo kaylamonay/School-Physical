@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School & Sports Physicals Info Portal</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
+ 
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white shadow-md print:bg-white print:text-black print:shadow-none">
+    <div class="max-w-6xl mx-auto px-4 py-8 md:py-12">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+        <div>
+          <span class="bg-indigo-500/30 text-indigo-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider print:hidden">Important Health Update</span>
+          <h1 class="text-3xl md:text-4xl font-extrabold mt-2 tracking-tight">School & Sports Physicals Portal</h1>
+          <p class="text-slate-300 mt-2 text-sm md:text-base max-w-2xl">
+            Complete guide to wellness exams, FHSAA physicals, and ECG screening requirements for student-athletes in Okaloosa, Santa Rosa, and Escambia counties.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-3 print:hidden">
+          <button onclick="window.print()" class="bg-white/10 hover:bg-white/20 text-white font-semibold py-2.5 px-4 rounded-lg border border-white/20 transition flex items-center gap-2 text-sm">
+            <i class="fa-solid fa-print"></i> Print Details
+          </button>
+          <a href="#schedule" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-2.5 px-4 rounded-lg shadow-lg shadow-indigo-600/20 transition flex items-center gap-2 text-sm">
+            <i class="fa-solid fa-calendar-days"></i> View Schedules
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+ 
+  <!-- Quick Info Bar (Rules & Statuses) -->
+  <section class="bg-indigo-50 border-y border-indigo-100 print:bg-transparent print:border-none">
+    <div class="max-w-6xl mx-auto px-4 py-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Card 1 -->
+        <div class="flex gap-4 items-start">
+          <div class="bg-blue-600 text-white p-3 rounded-xl shadow-md shrink-0">
+            <i class="fa-solid fa-circle-check text-xl"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm">Wellness Exam within Past Year?</h3>
+            <p class="text-xs text-slate-600 mt-1">
+              Contact <strong>Hurlburt Field Clinic</strong> to complete your form at <a href="tel:8508811020" class="text-blue-700 hover:underline font-semibold">(850) 881-1020</a>.
+            </p>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="flex gap-4 items-start">
+          <div class="bg-emerald-600 text-white p-3 rounded-xl shadow-md shrink-0">
+            <i class="fa-solid fa-calendar-plus text-xl"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm">No Wellness Exam Recently?</h3>
+            <p class="text-xs text-slate-600 mt-1">
+              Schedule one with your clinic or attend a school physical session at <strong>Eglin AFB</strong>. See details below.
+            </p>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="flex gap-4 items-start">
+          <div class="bg-rose-600 text-white p-3 rounded-xl shadow-md shrink-0">
+            <i class="fa-solid fa-heart-pulse text-xl"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm">Playing High School Sports?</h3>
+            <p class="text-xs text-slate-600 mt-1">
+              New Florida law requires a <strong>pre-participation ECG screening</strong> for all new FHSAA high school athletes.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <!-- Main Content -->
+  <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-8 md:py-12">
+   
+    <!-- Tab Navigation for Easier Viewing on Mobile -->
+    <div class="mb-8 border-b border-slate-200 print:hidden">
+      <nav class="flex flex-wrap -mb-px space-x-2 md:space-x-6" aria-label="Tabs">
+        <button onclick="switchTab('eglin')" id="tab-eglin" class="tab-btn border-indigo-600 text-indigo-600 border-b-2 py-4 px-2 md:px-4 text-sm font-semibold flex items-center gap-2">
+          <i class="fa-solid fa-hospital"></i> Eglin AFB Physicals
+        </button>
+        <button onclick="switchTab('navarre')" id="tab-navarre" class="tab-btn border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 border-b-2 py-4 px-2 md:px-4 text-sm font-semibold flex items-center gap-2">
+          <i class="fa-solid fa-user-doctor"></i> Navarre Free Exams
+        </button>
+        <button onclick="switchTab('ecg')" id="tab-ecg" class="tab-btn border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 border-b-2 py-4 px-2 md:px-4 text-sm font-semibold flex items-center gap-2">
+          <i class="fa-solid fa-heart-pulse"></i> ECG Screenings
+        </button>
+      </nav>
+    </div>
+ 
+    <!-- Section 1: Eglin AFB Details -->
+    <div id="section-eglin" class="tab-content space-y-8">
+     
+      <!-- Intro Cards -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 md:p-8">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="p-2.5 bg-blue-50 text-blue-700 rounded-lg"><i class="fa-solid fa-circle-info text-xl"></i></span>
+            <h2 class="text-xl md:text-2xl font-bold text-slate-900">Eglin AFB School & Sports Physicals</h2>
+          </div>
+         
+          <div class="space-y-4 text-slate-600 text-sm md:text-base leading-relaxed">
+            <p>
+              It's time to get <span class="font-semibold text-slate-900">"Ready for the Bell"</span> and <span class="font-semibold text-slate-900">"Set for the Field"</span>. Eglin AFB is providing dedicated appointment sessions for Tricare beneficiaries.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2"><i class="fa-solid fa-school text-indigo-600"></i> School Physicals</h4>
+                <p class="text-xs text-slate-500 mt-1">Required for initial entry into any Florida school (Pre-K through 12th grade).</p>
+              </div>
+              <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2"><i class="fa-solid fa-running text-indigo-600"></i> Sports Physicals</h4>
+                <p class="text-xs text-slate-500 mt-1">Required annually for all Florida public school athletes.</p>
+              </div>
+            </div>
+           
+            <div class="mt-6 border-t border-slate-100 pt-6">
+              <span class="font-bold text-slate-800 text-sm block mb-2">Patient Eligibility:</span>
+              <p class="text-sm">We provide care for <strong class="text-indigo-600">all TRICARE patients ages 3 and older</strong>. If you are relocating or moving, please check specific health guidelines for your new state's Department of Health.</p>
+            </div>
+          </div>
+        </div>
+ 
+        <!-- Appointment Info & CTA -->
+        <div class="bg-gradient-to-br from-indigo-900 to-blue-950 text-white rounded-2xl shadow-lg p-6 md:p-8 flex flex-col justify-between">
+          <div>
+            <span class="bg-indigo-500/30 text-indigo-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Book Now</span>
+            <h3 class="text-2xl font-bold mt-3">Appointment Hotline</h3>
+            <p class="text-indigo-200 text-xs mt-2 leading-relaxed">
+              Call the 96th Medical Group Appointment Line to schedule your child's physical. Slots fill up quickly, so early booking is highly recommended.
+            </p>
+           
+            <div class="mt-6 bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-4">
+              <i class="fa-solid fa-phone text-2xl text-indigo-400 shrink-0"></i>
+              <div>
+                <span class="text-xs text-indigo-300 block">Phone Number</span>
+                <a href="tel:8508838600" class="text-lg font-bold hover:underline">850-883-8600</a>
+              </div>
+            </div>
+          </div>
+         
+          <div class="mt-8 border-t border-white/10 pt-6">
+            <span class="text-xs text-indigo-300 block mb-2">Location details:</span>
+            <p class="text-xs leading-relaxed text-indigo-100">
+              Appointments are scheduled at either the <strong class="text-white">Family Medicine Residency</strong> clinic or the <strong class="text-white">Family Health</strong> clinic depending on the chosen date.
+            </p>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- Schedule Table -->
+      <div id="schedule" class="bg-white rounded-2xl shadow-sm border border-slate-200/80 overflow-hidden">
+        <div class="px-6 py-5 border-b border-slate-100 bg-slate-50/50 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h3 class="font-bold text-slate-900 text-lg">Eglin AFB Appointment Schedule</h3>
+            <p class="text-xs text-slate-500">Choose an available slot and call the appointment line to book.</p>
+          </div>
+          <span class="bg-blue-50 text-blue-700 text-xs font-semibold py-1.5 px-3 rounded-lg border border-blue-100 self-start sm:self-auto"><i class="fa-solid fa-clock"></i> Multiple Dates Available</span>
+        </div>
+ 
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-slate-200 bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-wider">
+                <th class="px-6 py-4">Date</th>
+                <th class="px-6 py-4">Day</th>
+                <th class="px-6 py-4">Time Window</th>
+                <th class="px-6 py-4">Location</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-sm text-slate-600">
+              <tr class="hover:bg-slate-50/50 transition">
+                <td class="px-6 py-4 font-semibold text-slate-900">May 22</td>
+                <td class="px-6 py-4">Friday</td>
+                <td class="px-6 py-4">Morning</td>
+                <td class="px-6 py-4"><span class="px-2.5 py-1 bg-violet-50 text-violet-700 rounded-md text-xs font-semibold">Family Medicine Residency</span></td>
+              </tr>
+              <tr class="hover:bg-slate-50/50 transition">
+                <td class="px-6 py-4 font-semibold text-slate-900">June 10</td>
+                <td class="px-6 py-4">Wednesday</td>
+                <td class="px-6 py-4">Afternoon</td>
+                <td class="px-6 py-4"><span class="px-2.5 py-1 bg-sky-50 text-sky-700 rounded-md text-xs font-semibold">Family Health</span></td>
+              </tr>
+              <tr class="hover:bg-slate-50/50 transition">
+                <td class="px-6 py-4 font-semibold text-slate-900">June 22</td>
+                <td class="px-6 py-4">Monday</td>
+                <td class="px-6 py-4">All Day</td>
+                <td class="px-6 py-4"><span class="px-2.5 py-1 bg-violet-50 text-violet-700 rounded-md text-xs font-semibold">Family Medicine Residency</span></td>
+              </tr>
+              <tr class="hover:bg-slate-50/50 transition">
+                <td class="px-6 py-4 font-semibold text-slate-900">June 24</td>
+                <td class="px-6 py-4">Wednesday</td>
+                <td class="px-6 py-4">Morning</td>
+                <td class="px-6 py-4"><span class="px-2.5 py-1 bg-sky-50 text-sky-700 rounded-md text-xs font-semibold">Family Health</span></td>
+              </tr>
+              <tr class="hover:bg-slate-50/50 transition">
+                <td class="px-6 py-4 font-semibold text-slate-900">July 9</td>
+                <td class="px-6 py-4">Thursday</td>
+                <td class="px-6 py-4">Afternoon</td>
+                <td class="px-6 py-4"><span class="px-2.5 py-1 bg-sky-50 text-sky-700 rounded-md text-xs font-semibold">Family Health</span></td>
+              </tr>
+              <tr class="hover:bg-slate-50/50 transition">
+                <td class="px-6 py-4 font-semibold text-slate-900">July 17</td>
+                <td class="px-6 py-4">Friday</td>
+                <td class="px-6 py-4">Morning</td>
+                <td class="px-6 py-4"><span class="px-2.5 py-1 bg-sky-50 text-sky-700 rounded-md text-xs font-semibold">Family Health</span></td>
+              </tr>
+              <tr class="hover:bg-slate-50/50 transition">
+                <td class="px-6 py-4 font-semibold text-slate-900">July 28</td>
+                <td class="px-6 py-4">Tuesday</td>
+                <td class="px-6 py-4">Afternoon</td>
+                <td class="px-6 py-4"><span class="px-2.5 py-1 bg-sky-50 text-sky-700 rounded-md text-xs font-semibold">Family Health</span></td>
+              </tr>
+              <tr class="hover:bg-slate-50/50 transition">
+                <td class="px-6 py-4 font-semibold text-slate-900">August 6</td>
+                <td class="px-6 py-4">Thursday</td>
+                <td class="px-6 py-4">Afternoon</td>
+                <td class="px-6 py-4"><span class="px-2.5 py-1 bg-sky-50 text-sky-700 rounded-md text-xs font-semibold">Family Health</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- Section 2: Navarre High School Free Exams -->
+    <div id="section-navarre" class="tab-content hidden space-y-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+       
+        <!-- Details Card -->
+        <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 md:p-8">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="p-2.5 bg-emerald-50 text-emerald-700 rounded-lg"><i class="fa-solid fa-gift text-xl"></i></span>
+            <h2 class="text-xl md:text-2xl font-bold text-slate-900">Free Sports Physicals for Navarre HS Athletes</h2>
+          </div>
+          <p class="text-slate-500 text-sm mb-6">
+            Sponsored by <strong class="text-slate-700">Baptist Health Care</strong> and <strong class="text-slate-700">Andrews Institute Orthopaedics & Sports Medicine</strong>.
+          </p>
+ 
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="flex gap-3">
+              <i class="fa-solid fa-calendar text-emerald-600 text-xl shrink-0 mt-1"></i>
+              <div>
+                <span class="text-xs text-slate-400 block font-medium">When</span>
+                <span class="text-sm font-bold text-slate-800">Saturday, June 6, 2026</span>
+                <div class="text-xs text-slate-600 mt-1 space-y-0.5">
+                  <p>• 11:00 AM — Last Name A-R</p>
+                  <p>• 11:30 AM — Last Name S-Z</p>
+                  <p class="text-rose-600 font-medium mt-1">Note: Assigned times are strictly adhered to.</p>
+                </div>
+              </div>
+            </div>
+ 
+            <div class="flex gap-3">
+              <i class="fa-solid fa-map-pin text-emerald-600 text-xl shrink-0 mt-1"></i>
+              <div>
+                <span class="text-xs text-slate-400 block font-medium">Where</span>
+                <span class="text-sm font-bold text-slate-800">Andrews Institute</span>
+                <p class="text-xs text-slate-600 mt-1">1040 Gulf Breeze Parkway<br>Gulf Breeze, FL 32561</p>
+              </div>
+            </div>
+ 
+            <div class="flex gap-3">
+              <i class="fa-solid fa-user-group text-emerald-600 text-xl shrink-0 mt-1"></i>
+              <div>
+                <span class="text-xs text-slate-400 block font-medium">Who is Eligible</span>
+                <span class="text-sm font-bold text-slate-800">Navarre High School Student-Athletes</span>
+                <p class="text-xs text-slate-600 mt-1">Entering grades 9-12 who are participating in FHSAA sports ONLY.</p>
+              </div>
+            </div>
+ 
+            <div class="flex gap-3">
+              <i class="fa-solid fa-clipboard-check text-emerald-600 text-xl shrink-0 mt-1"></i>
+              <div>
+                <span class="text-xs text-slate-400 block font-medium">What is Included</span>
+                <span class="text-sm font-bold text-slate-800">Comprehensive Screening</span>
+                <p class="text-xs text-slate-600 mt-1">Height, weight, vision, orthopaedic movement screening, blood pressure, and physician/provider evaluation.</p>
+              </div>
+            </div>
+          </div>
+ 
+          <!-- Important Checklists -->
+          <div class="border-t border-slate-100 pt-6">
+            <h4 class="font-bold text-slate-900 text-base mb-4 flex items-center gap-2">
+              <i class="fa-solid fa-circle-exclamation text-amber-500"></i> Critical Guidelines
+            </h4>
+            <ul class="space-y-3 text-sm text-slate-600">
+              <li class="flex items-start gap-2.5">
+                <i class="fa-regular fa-square-check text-emerald-600 mt-1"></i>
+                <span><strong>Required Form:</strong> The 4-page FHSAA EL2 Physical Form (version "Revised 2/26" or later) is the ONLY accepted form. Print it single-sided; do not fold pages.</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i class="fa-regular fa-square-check text-emerald-600 mt-1"></i>
+                <span><strong>Signatures Required:</strong> Parent/guardian signatures are required on pages 2 & 4. Fill out all history/demographic info prior to arrival.</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i class="fa-regular fa-square-check text-emerald-600 mt-1"></i>
+                <span><strong>Apparel:</strong> Wear athletic attire. Bring and wear any prescription glasses or contact lenses.</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i class="fa-regular fa-square-check text-emerald-600 mt-1"></i>
+                <span><strong>Next Steps:</strong> Once physical forms are complete, they are returned to the student. Families are responsible for submitting page 4 (Medical Eligibility) to the school.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+ 
+        <!-- Sidebar Actions -->
+        <div class="space-y-6">
+          <div class="bg-gradient-to-b from-slate-900 to-slate-950 text-white rounded-2xl shadow-md p-6 border border-slate-800">
+            <h3 class="font-bold text-lg mb-4">ECG Onsite Partnership</h3>
+            <p class="text-xs text-slate-400 leading-relaxed mb-4">
+              <strong>Who We Play For</strong> will be onsite offering a limited number of low-cost ECGs during the Navarre event. Pre-registration online is mandatory.
+            </p>
+            <a href="https://www.whoweplayfor.org/heart-screening-registration" target="_blank" class="block text-center bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-4 rounded-xl text-sm transition shadow-lg shadow-indigo-600/10">
+              Pre-Register for ECG
+            </a>
+          </div>
+ 
+          <div class="bg-slate-100 rounded-2xl p-6 border border-slate-200">
+            <h4 class="font-bold text-slate-800 text-sm mb-2">Need FHSAA forms?</h4>
+            <p class="text-xs text-slate-500 mb-4">Download them directly from FHSAA.com before the event.</p>
+            <a href="https://fhsaa.com" target="_blank" class="inline-flex items-center gap-1.5 text-xs text-indigo-600 hover:text-indigo-800 font-semibold underline">
+              Go to FHSAA.com <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- Section 3: ECG Screenings -->
+    <div id="section-ecg" class="tab-content hidden space-y-8">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+       
+        <!-- Info -->
+        <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-200/80 p-6 md:p-8">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="p-2.5 bg-rose-50 text-rose-700 rounded-lg"><i class="fa-solid fa-heart-pulse text-xl"></i></span>
+            <h2 class="text-xl md:text-2xl font-bold text-slate-900">ECG Screening Information</h2>
+          </div>
+         
+          <div class="bg-amber-50 text-amber-900 px-4 py-3 rounded-xl text-sm border border-amber-200/50 mb-6 flex gap-3">
+            <i class="fa-solid fa-gavel text-lg shrink-0 mt-0.5"></i>
+            <div>
+              <strong>New Florida Law Requirement:</strong> ECG screenings are now mandatory for new FHSAA athletic participants starting this year.
+            </div>
+          </div>
+ 
+          <div class="space-y-6">
+            <div>
+              <h3 class="font-bold text-slate-800 text-base mb-3">Who Needs an ECG Screening?</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-rose-50/40 border border-rose-100/50 rounded-xl p-4">
+                  <span class="bg-rose-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Mandatory</span>
+                  <h4 class="font-bold text-slate-800 text-sm mt-2">Rising 2026 - 2027 Freshmen</h4>
+                  <p class="text-xs text-slate-500 mt-1">All incoming freshmen trying out for or participating in FHSAA interscholastic sports.</p>
+                </div>
+                <div class="bg-rose-50/40 border border-rose-100/50 rounded-xl p-4">
+                  <span class="bg-rose-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Mandatory</span>
+                  <h4 class="font-bold text-slate-800 text-sm mt-2">New Athletes (Grades 10-12)</h4>
+                  <p class="text-xs text-slate-500 mt-1">Students in grades 10-12 who did NOT participate in FHSAA athletics previously.</p>
+                </div>
+              </div>
+              <p class="text-xs text-slate-500 mt-3 leading-relaxed">
+                <strong>Exemptions & Exclusions:</strong> Returning FHSAA student-athletes are NOT required to have an ECG, though they may receive one if desired. ECG screenings are NOT required for Band, ROTC, Dance, or Flagline.
+              </p>
+            </div>
+ 
+            <div class="border-t border-slate-100 pt-6">
+              <h3 class="font-bold text-slate-800 text-base mb-4">Low-Cost Screening Event Details</h3>
+              <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200/60">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span class="text-xs text-slate-400 font-medium block">Date</span>
+                    <span class="font-semibold text-slate-800">Saturday, June 6, 2026</span>
+                  </div>
+                  <div>
+                    <span class="text-xs text-slate-400 font-medium block">Provider</span>
+                    <span class="font-semibold text-slate-800">Who We Play For (Non-Profit)</span>
+                  </div>
+                  <div class="sm:col-span-2">
+                    <span class="text-xs text-slate-400 font-medium block">Location</span>
+                    <span class="font-semibold text-slate-800">Andrews Institute</span>
+                    <p class="text-xs text-slate-500">1040 Gulf Breeze Parkway, Gulf Breeze, FL 32561</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+ 
+        <!-- Registration Card / Sidebar -->
+        <div class="space-y-6">
+          <div class="bg-gradient-to-br from-rose-900 to-rose-950 text-white rounded-2xl p-6 shadow-md border border-rose-800 flex flex-col justify-between">
+            <div>
+              <span class="bg-rose-500/30 text-rose-300 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Registration Required</span>
+              <h3 class="text-xl font-bold mt-4">Screening Registration</h3>
+              <p class="text-xs text-rose-200 mt-2 leading-relaxed">
+                Electronic registration is REQUIRED at least 2 days prior to the event. Slots are limited and filled on a first-come, first-served basis.
+              </p>
+             
+              <div class="mt-4 space-y-2 text-xs text-rose-100">
+                <p>• <strong>Cost:</strong> $20 per ECG</p>
+                <p>• <em>Financial assistance available upon request</em></p>
+              </div>
+            </div>
+ 
+            <div class="mt-6">
+              <a href="https://www.whoweplayfor.org/heart-screening-registration" target="_blank" class="block w-full text-center bg-white text-rose-950 hover:bg-rose-50 font-bold py-3 px-4 rounded-xl text-sm transition">
+                Register Online
+              </a>
+              <span class="text-[10px] text-center block mt-2 text-rose-300">Select "Santa Rosa County, FL" when registering</span>
+            </div>
+          </div>
+ 
+          <div class="bg-slate-100 rounded-2xl p-6 border border-slate-200">
+            <h4 class="font-bold text-slate-800 text-sm mb-2">Other Facilities Offering Physicals & ECGs</h4>
+            <div class="space-y-3 mt-4 text-xs">
+              <div class="border-l-2 border-slate-400 pl-3">
+                <span class="font-bold text-slate-700 block">Niceville High School</span>
+                <span class="text-slate-500">Tuesday, May 26th (4pm - 7pm)</span>
+              </div>
+              <div class="border-l-2 border-slate-400 pl-3">
+                <span class="font-bold text-slate-700 block">Choctawhatchee High School</span>
+                <span class="text-slate-500">Saturday, May 30th (8am - Noon)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+ 
+  </main>
+ 
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800 mt-auto print:bg-white print:text-black print:border-t-0">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div>
+        <p class="font-semibold text-slate-300">School & Sports Physicals Portal</p>
+        <p class="mt-1">Compiled from verified clinical and school board announcements.</p>
+      </div>
+      <div class="flex gap-4 print:hidden">
+        <a href="https://fhsaa.com" target="_blank" class="hover:underline hover:text-white">FHSAA.com</a>
+        <a href="https://www.whoweplayfor.org" target="_blank" class="hover:underline hover:text-white">Who We Play For</a>
+      </div>
+    </div>
+  </footer>
+ 
+  <!-- Simple JavaScript for Tab Switching -->
+  <script>
+    function switchTab(tabId) {
+      // Hide all contents
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.add('hidden');
+      });
+      // Deactivate all tab buttons
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('border-indigo-600', 'text-indigo-600');
+        btn.classList.add('border-transparent', 'text-slate-500');
+      });
+ 
+      // Show the selected tab content
+      document.getElementById('section-' + tabId).classList.remove('hidden');
+      // Activate selected button
+      document.getElementById('tab-' + tabId).classList.add('border-indigo-600', 'text-indigo-600');
+      document.getElementById('tab-' + tabId).classList.remove('border-transparent', 'text-slate-500');
+    }
+  </script>
+</body>
+</html>
